@@ -1,14 +1,26 @@
-import React, { ChangeEvent, useEffect, useRef } from 'react'
-import { useState } from 'react'
-import ReactInput, { InputProps } from 'react-input'
+import { useEffect, useRef } from 'react';
+import { useState } from 'react';
+import ReactInput, { InputProps } from '@meksiabdou/react-input';
 
 const App = () => {
   const [data, setData] = useState<any>({
     password: undefined,
     email: undefined,
     role: undefined,
-    colors: undefined
-  })
+    colors: [{ value: 'Blue', label: 'Blue' }]
+  });
+
+  const onChange = ({target}: any) => {
+    const {name, value} = target;
+    console.log(target);
+    setData({
+      ...data,
+      [name]: value
+    });
+  };
+  const onClick = (e: any) => {
+    console.log(e);
+  }
 
   const inputs: Array<InputProps> = [
     {
@@ -16,23 +28,25 @@ const App = () => {
       type: 'email',
       placeholder: 'Email',
       defaultValue: 'test@email.com',
-      onChange: (e: ChangeEvent<any>) => {
-        setData({
-          ...data,
-          email: e.target.value
-        })
-      }
+      onChange: onChange,
+      onClick: onClick,
+    },
+    {
+      name: 'amount',
+      // type: 'text',
+      placeholder: 'Amount',
+      defaultValue: 1000,
+      as: 'currencyInput',
+      decimalSeparator: '.',
+      onChange: onChange,
+      onClick: onClick,
     },
     {
       name: 'password',
       type: 'password',
       placeholder: 'password',
-      onChange: (e: ChangeEvent<any>) => {
-        setData({
-          ...data,
-          password: e.target.value
-        })
-      }
+      onChange: onChange,
+      onClick: onClick,
     },
     {
       name: 'role',
@@ -52,12 +66,7 @@ const App = () => {
           label: 'Manger'
         }
       ],
-      onChange: (e: ChangeEvent<any>) => {
-        setData({
-          ...data,
-          role: e.target.value
-        })
-      }
+      onChange: onChange,
     },
     {
       name: 'colors',
@@ -79,21 +88,15 @@ const App = () => {
           label: 'Black'
         }
       ],
-      onChange: (e: ChangeEvent<any>) => {
-        // console.log(e.target.value);
-        setData({
-          ...data,
-          colors: e.target.value
-        })
-      }
+      onChange: onChange,
     }
-  ]
+  ];
 
-  const inputsRef = useRef<Array<any>>([])
+  const inputsRef = useRef<Array<any>>([]);
 
   useEffect(() => {
-    console.log(inputsRef.current)
-  }, [inputsRef])
+    console.log(inputsRef.current);
+  }, [inputsRef]);
 
   return (
     <div
@@ -114,11 +117,12 @@ const App = () => {
               value={data[input.name]}
             />
           </div>
-        )
+        );
       })}
 
       <div className='mb-1'>
         <p>Email : {data.email || ''}</p>
+        <p>Amount : {data.amount || ''}</p>
         <p>Password : {data.password || ''}</p>
         <p>Role : {data.role || ''}</p>
         <p>
@@ -127,7 +131,7 @@ const App = () => {
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

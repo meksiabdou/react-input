@@ -1,17 +1,29 @@
 /* eslint-disable no-unused-vars */
-import { ChangeEvent, CSSProperties, ReactNode } from 'react'
+import {
+  ChangeEvent,
+  CSSProperties,
+  ReactNode,
+  InputHTMLAttributes
+} from 'react';
+import { IntlConfig } from 'react-currency-input-field/dist/components/CurrencyInputProps';
 
-export interface InputProps {
-  ref?: any
-  placeholder?: string
-  label?: string
-  name: string
-  type?: string
-  value?: any
-  defaultValue?: any
-  error?: string
-  className?: string
-  dir?: 'rtl' | 'ltr'
+export interface OptionProps {
+  value: any;
+  label: string;
+}
+
+export interface InputProps
+  extends InputHTMLAttributes<'input' | 'textarea' | 'select'> {
+  ref?: any;
+  placeholder?: string;
+  label?: string;
+  name: string;
+  type?: string;
+  value?: any;
+  defaultValue?: any;
+  error?: string;
+  className?: string;
+  dir?: 'rtl' | 'ltr' | 'auto';
   as?:
     | 'input'
     | 'textarea'
@@ -19,35 +31,31 @@ export interface InputProps {
     | 'dropdown'
     | 'currencyInput'
     | 'creatableSelect'
-    | 'react-select'
-  icon?: ReactNode
+    | 'react-select';
+  icon?: ReactNode;
   options?: Array<{
-    value: string | number
-    label: string | number
-  }>
-  style?: CSSProperties
-  htmlFor?: string
-  decimalSeparator?: '.' | ','
-  thousandSeparator?: '.' | ','
-  precision?: number
-  prefix?: string | null
-  suffix?: string | null
-  onChange?: (
-    e:
-      | ChangeEvent<HTMLInputElement>
-      | ChangeEvent<HTMLTextAreaElement>
-      | ChangeEvent<HTMLSelectElement>
-  ) => void
-  onChangeEvent?: (
-    e:
-      | ChangeEvent<HTMLInputElement>
-      | ChangeEvent<HTMLTextAreaElement>
-      | ChangeEvent<HTMLSelectElement>,
-    maskedvalue?: any,
-    floatvalue?: any
-  ) => void
-  onFocus?: (e: any) => void
-  isClearable?: boolean
-  isMulti?: boolean
-  disabled?: boolean
+    value: string | number;
+    label: string | number;
+  }>;
+  style?: CSSProperties;
+  htmlFor?: string;
+  decimalSeparator?: '.' | ',';
+  // thousandSeparator?: '.' | ',';
+  precision?: number;
+  prefix?: string;
+  suffix?: string;
+  allowDecimals?: boolean;
+  allowNegativeValue?: boolean;
+  decimalsLimit?: number;
+  decimalScale?: number;
+  fixedDecimalLength?: number;
+  groupSeparator?: '.' | ',' | string;
+  intlConfig?: IntlConfig;
+  disableAbbreviations?: boolean;
+  disableGroupSeparators?: boolean;
+  isClearable?: boolean;
+  isMulti?: boolean;
+  disabled?: boolean;
+  onChange?: (e: ChangeEvent<any>, formatted?: any, floatvalue?: any) => void;
+  onFocus?: (e: any) => any;
 }

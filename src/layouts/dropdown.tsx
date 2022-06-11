@@ -4,7 +4,8 @@ import React, {
   useRef,
   useState,
   forwardRef
-} from 'react'
+} from 'react';
+import { OptionProps } from '../interface';
 
 const Dropdown = forwardRef(
   (
@@ -16,37 +17,38 @@ const Dropdown = forwardRef(
       style,
       dir
     }: {
-      dir: any
-      style: any
-      value: any
-      placeholder: any
-      options: Array<any>
-      onChange: (e: any) => void
+      dir: 'ltr' | 'rtl';
+      style: CSSStyleSheet;
+      value: any;
+      placeholder: string;
+      options: Array<OptionProps>;
+      onChange: (e: any) => void;
     },
     ref
   ) => {
-    const [dropdown, setDropdown] = useState<boolean>(false)
-    const dropdownRef = useRef<any>(null)
+    const [dropdown, setDropdown] = useState<boolean>(false);
+    const dropdownRef = useRef<any>(null);
 
     const handleClickOutside = (e: MouseEvent) => {
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(e.target as any)
       ) {
-        setDropdown(false)
+        setDropdown(false);
       }
-    }
+    };
 
     useImperativeHandle(ref, () => {
-      return dropdownRef.current
-    })
+      return dropdownRef.current;
+    });
 
     // console.log(ref);
 
     useEffect(() => {
-      document.addEventListener('mousedown', handleClickOutside)
-      return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [])
+      document.addEventListener('mousedown', handleClickOutside);
+      return () =>
+        document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     return (
       <div className='dropdown' style={{ width: '100%' }} ref={dropdownRef}>
@@ -57,7 +59,6 @@ const Dropdown = forwardRef(
             ...(style || {}),
             width: '100%',
             textAlign: 'initial',
-            // color: '#808080',
             direction: dir || 'initial'
           }}
           onClick={() => setDropdown(!dropdown)}
@@ -82,22 +83,21 @@ const Dropdown = forwardRef(
                           : () => null
                       }
                       className='dropdown-item'
+                      style={{cursor : 'pointer', listStyle: 'none'}}
                       key={i.toString()}
                       value={item.value}
                     >
-                      {typeof item.label === 'function'
-                        ? item.label()
-                        : item.label}
+                      {item.label}
                     </li>
-                  )
+                  );
                 }
-                return null
+                return null;
               })
             : null}
         </ul>
       </div>
-    )
+    );
   }
-)
+);
 
-export default Dropdown
+export default Dropdown;
