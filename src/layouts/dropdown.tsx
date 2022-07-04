@@ -15,14 +15,16 @@ const Dropdown = forwardRef(
       value,
       placeholder,
       style,
-      dir
+      dir,
+      children
     }: {
       dir: 'ltr' | 'rtl';
       style: CSSStyleSheet;
       value: any;
       placeholder: string;
       options: Array<OptionProps>;
-      onChange: (e: any) => void;
+      onChange?: (e: any) => void;
+      children?: any;
     },
     ref
   ) => {
@@ -67,23 +69,25 @@ const Dropdown = forwardRef(
         </button>
         <ul
           className='dropdown-menu'
-          style={{ display: dropdown ? 'block' : 'none', marginTop: 5 }}
+          style={{
+            display: dropdown ? 'block' : 'none',
+            marginTop: 5,
+            direction: dir || 'initial'
+          }}
         >
-          {Array.isArray(options)
+          {children
+            ? children
+            : Array.isArray(options)
             ? options.map((item, i) => {
                 if (item.value !== undefined && item.label !== undefined) {
                   return (
                     <li
                       role='button'
                       onClick={() =>
-                        onChange
-                          ? onChange({
-                              target: { value: item.value }
-                            } as any)
-                          : () => null
+                        onChange ? onChange(item.value) : () => null
                       }
                       className='dropdown-item'
-                      style={{cursor : 'pointer', listStyle: 'none'}}
+                      style={{ cursor: 'pointer', listStyle: 'none' }}
                       key={i.toString()}
                       value={item.value}
                     >

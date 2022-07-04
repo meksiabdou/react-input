@@ -3,7 +3,8 @@ import React, {
   useCallback,
   CSSProperties,
   ChangeEvent,
-  forwardRef
+  forwardRef,
+  useEffect
 } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 import Select, { StylesConfig } from 'react-select';
@@ -28,7 +29,7 @@ const ReactInput: React.FC<InputProps> = forwardRef(
       label,
       name,
       type,
-      value,
+      value: initValue,
       className,
       dir,
       defaultValue,
@@ -40,10 +41,17 @@ const ReactInput: React.FC<InputProps> = forwardRef(
       // options,
       style,
       htmlFor,
+      children,
       ...rest
     } = IProps;
 
-    const [_value, setValue] = useState(value || defaultValue || '');
+    const [value, setValue] = useState(defaultValue || '');
+
+    useEffect(() => {
+      if (value !== undefined || value !== null) {
+        setValue(value);
+      }
+    }, [initValue]);
 
     const customStyles: StylesConfig = {
       control: (provided: any) => ({
@@ -81,9 +89,14 @@ const ReactInput: React.FC<InputProps> = forwardRef(
         onChange: _onChange,
         ..._rest
       } = props;
+
+      const selectStyle = {...styleInputSelect, backgroundPosition: `${_rest.dir === "rtl" ? "left" : "right"} .75rem center`};
+
       switch (as) {
         case 'textarea':
-          return <textarea ref={ref} {...(_rest as any)} onChange={_onChange} />;
+          return (
+            <textarea ref={ref} {...(_rest as any)} onChange={_onChange} />
+          );
         case 'input':
           return <input ref={ref} {...(_rest as any)} onChange={_onChange} />;
         case 'select':
@@ -91,10 +104,11 @@ const ReactInput: React.FC<InputProps> = forwardRef(
             <select
               ref={ref}
               {...(_rest as any)}
+              onChange={_onChange}
               className='form-select'
               style={
                 {
-                  ...styleInputSelect,
+                  ...selectStyle,
                   direction: _rest.dir || 'initial'
                 } as CSSProperties
               }
@@ -119,9 +133,17 @@ const ReactInput: React.FC<InputProps> = forwardRef(
               options={options}
               ref={ref}
               {...(_rest as any)}
-              style={styleInputSelect}
-              onChange={_onChange}
-            />
+              style={selectStyle}
+              onChange={(e) => {
+                if (_onChange) {
+                  _onChange({
+                    target: { value: e, name: _rest.name }
+                  } as any);
+                }
+              }}
+            >
+              {children}
+            </Dropdown>
           );
         case 'currencyInput':
           return (
@@ -144,11 +166,13 @@ const ReactInput: React.FC<InputProps> = forwardRef(
               allowDecimals={allowDecimals}
               onValueChange={(v: string, _, values) => {
                 if (_onChange) {
-                  _onChange({
-                    target: { value: v, name: _rest.name },
-                  } as any,
-                  values?.formatted,
-                  values?.float);
+                  _onChange(
+                    {
+                      target: { value: v, name: _rest.name }
+                    } as any,
+                    values?.formatted,
+                    values?.float
+                  );
                 }
               }}
             />
@@ -160,12 +184,11 @@ const ReactInput: React.FC<InputProps> = forwardRef(
               {...(_rest as any)}
               type={undefined}
               isDisabled={_rest.disabled || false}
+              isRtl={_rest.dir === "rtl"}
               styles={customStyles}
               isClearable={isClearable}
               isMulti={isMulti}
-              value={
-                Array.isArray(_rest.value) ? _rest.value : []
-              }
+              value={Array.isArray(_rest.value) ? _rest.value : []}
               options={Array.isArray(options) ? options : _rest.defaultValue}
               onChange={(e: any) => {
                 if (_onChange) {
@@ -183,11 +206,10 @@ const ReactInput: React.FC<InputProps> = forwardRef(
               {...(_rest as any)}
               type={undefined}
               isDisabled={_rest.disabled || false}
+              isRtl={_rest.dir === "rtl"}
               styles={customStyles}
               isMulti={isMulti}
-              value={
-                Array.isArray(_rest.value) ? _rest.value : []
-              }
+              value={Array.isArray(_rest.value) ? _rest.value : []}
               options={Array.isArray(options) ? options : _rest.defaultValue}
               onChange={(e: any) => {
                 if (_onChange) {
@@ -223,7 +245,7 @@ const ReactInput: React.FC<InputProps> = forwardRef(
             name={name}
             dir={dir || 'auto'}
             type={passwordShow ? 'text' : type || undefined}
-            value={_value}
+            value={value}
             label={label}
             onChange={(e: ChangeEvent<HTMLInputElement>, ...params) => {
               if (onChange && typeof onChange === 'function') {
