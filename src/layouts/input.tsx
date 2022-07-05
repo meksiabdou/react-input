@@ -80,6 +80,13 @@ const ReactInput: React.FC<InputProps> = forwardRef(
       ...(style || {})
     };
 
+    const stringToBoolean = (str: string) => {
+      if (['true', 'false'].includes(str.toString())) {
+        return str === 'true';
+      }
+      return !!str;
+    };
+
     const Component = useCallback((props: InputProps) => {
       const {
         isMulti,
@@ -264,16 +271,16 @@ const ReactInput: React.FC<InputProps> = forwardRef(
             type={passwordShow ? 'text' : type || undefined}
             value={value}
             checked={
-              type === 'checkbox' || type === 'radio' ? !!value : undefined
+              type === 'checkbox' || type === 'radio' ? stringToBoolean(value) : undefined
             }
             label={label}
             onChange={(e: ChangeEvent<HTMLInputElement>, ...params) => {
               if (onChange && typeof onChange === 'function') {
                 if (type === 'checkbox' || type === 'radio') {
                   if ((e?.target as any)?.checked) {
-                    (e.target as any).value = 1;
+                    e.target.value = "true";
                   } else {
-                    (e.target as any).value = 0;
+                    e.target.value = "false";
                   }
                 }
                 setValue(e.target.value);
