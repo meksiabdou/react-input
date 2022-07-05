@@ -29,10 +29,12 @@ const ReactInput: React.FC<InputProps> = forwardRef(
       label,
       name,
       type,
-      value: initValue,
+      value: userValue,
       className,
       dir,
       defaultValue,
+      defaultChecked,
+      checked: userChecked,
       error,
       onChange,
       onFocus,
@@ -45,13 +47,23 @@ const ReactInput: React.FC<InputProps> = forwardRef(
       ...rest
     } = IProps;
 
-    const [value, setValue] = useState(defaultValue || '');
+    const [value, setValue] = useState(defaultValue || defaultChecked || '');
 
     useEffect(() => {
-      if (value !== undefined || value !== null) {
-        setValue(value);
+      if (userValue !== undefined && userValue !== null) {
+        if (type !== 'checkbox' && type !== 'radio') {
+          setValue(userValue);
+        }
       }
-    }, [initValue]);
+    }, [userValue]);
+
+    useEffect(() => {
+      if (userChecked !== undefined && userChecked !== null) {
+        if (type === 'checkbox' || type === 'radio') {
+          setValue(!!userChecked);
+        }
+      }
+    }, [userChecked]);
 
     const customStyles: StylesConfig = {
       control: (provided: any) => ({
@@ -90,7 +102,12 @@ const ReactInput: React.FC<InputProps> = forwardRef(
         ..._rest
       } = props;
 
-      const selectStyle = {...styleInputSelect, backgroundPosition: `${_rest.dir === "rtl" ? "left" : "right"} .75rem center`};
+      const selectStyle = {
+        ...styleInputSelect,
+        backgroundPosition: `${
+          _rest.dir === 'rtl' ? 'left' : 'right'
+        } .75rem center`
+      };
 
       switch (as) {
         case 'textarea':
@@ -184,7 +201,7 @@ const ReactInput: React.FC<InputProps> = forwardRef(
               {...(_rest as any)}
               type={undefined}
               isDisabled={_rest.disabled || false}
-              isRtl={_rest.dir === "rtl"}
+              isRtl={_rest.dir === 'rtl'}
               styles={customStyles}
               isClearable={isClearable}
               isMulti={isMulti}
@@ -206,7 +223,7 @@ const ReactInput: React.FC<InputProps> = forwardRef(
               {...(_rest as any)}
               type={undefined}
               isDisabled={_rest.disabled || false}
-              isRtl={_rest.dir === "rtl"}
+              isRtl={_rest.dir === 'rtl'}
               styles={customStyles}
               isMulti={isMulti}
               value={Array.isArray(_rest.value) ? _rest.value : []}
@@ -246,14 +263,17 @@ const ReactInput: React.FC<InputProps> = forwardRef(
             dir={dir || 'auto'}
             type={passwordShow ? 'text' : type || undefined}
             value={value}
+            checked={
+              type === 'checkbox' || type === 'radio' ? !!value : undefined
+            }
             label={label}
             onChange={(e: ChangeEvent<HTMLInputElement>, ...params) => {
               if (onChange && typeof onChange === 'function') {
                 if (type === 'checkbox' || type === 'radio') {
                   if ((e?.target as any)?.checked) {
-                    e.target.value = '1';
+                    (e.target as any).value = 1;
                   } else {
-                    e.target.value = '0';
+                    (e.target as any).value = 0;
                   }
                 }
                 setValue(e.target.value);

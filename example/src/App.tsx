@@ -8,7 +8,8 @@ const App = () => {
     email: undefined,
     role: undefined,
     country: undefined,
-    colors: [{ value: 'Blue', label: 'Blue' }]
+    colors: undefined,
+    confirm: undefined,
   });
 
   const [direction, setDirection] = useState('rtl');
@@ -66,9 +67,17 @@ const App = () => {
           onClick: onClick
         },
         {
+          name: 'confirm',
+          type: 'checkbox',
+          placeholder: 'confirm',
+          defaultChecked: true,
+          onChange: onChange,
+        },
+        {
           name: 'role',
           as: 'select',
           placeholder: 'Select role',
+          defaultValue: "Admin",
           //dir: 'rtl',
           options: [
             {
@@ -147,7 +156,7 @@ const App = () => {
           onChange: onChange
         }
       ]);
-    }, 1500);
+    }, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -169,6 +178,7 @@ const App = () => {
               {...(input as any)}
               dir={direction}
               value={data[input.name]}
+              checked={data[input.name] ? data[input.name] === "1" : undefined}
             />
           </div>
         );
