@@ -10,7 +10,7 @@
 ## Install
 
 ```bash
-yarn add https://github.com/meksiabdou/react-input.git
+yarn add https://github.com/meksiabdou/react-input.git#v2
 ```
 
 ### Parameters

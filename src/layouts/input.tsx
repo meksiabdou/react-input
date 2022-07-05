@@ -47,6 +47,13 @@ const ReactInput: React.FC<InputProps> = forwardRef(
       ...rest
     } = IProps;
 
+    const stringToBoolean = (str: any) => {
+      if (['true', 'false'].includes(str.toString())) {
+        return str.toString() === 'true';
+      }
+      return !!str;
+    };
+
     const [value, setValue] = useState(defaultValue || defaultChecked || '');
 
     useEffect(() => {
@@ -60,7 +67,7 @@ const ReactInput: React.FC<InputProps> = forwardRef(
     useEffect(() => {
       if (userChecked !== undefined && userChecked !== null) {
         if (type === 'checkbox' || type === 'radio') {
-          setValue(!!userChecked);
+          setValue(userChecked);
         }
       }
     }, [userChecked]);
@@ -78,13 +85,6 @@ const ReactInput: React.FC<InputProps> = forwardRef(
         return { ...provided, padding: 0 };
       },
       ...(style || {})
-    };
-
-    const stringToBoolean = (str: string) => {
-      if (['true', 'false'].includes(str.toString())) {
-        return str === 'true';
-      }
-      return !!str;
     };
 
     const Component = useCallback((props: InputProps) => {

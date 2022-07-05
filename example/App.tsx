@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { useState } from 'react';
-import ReactInput, { InputProps } from '@meksiabdou/react-input';
+import * as React from 'react';
+import { useState, useEffect, useRef } from 'react';
+import ReactInput, { InputProps } from '../.';
 
 const App = () => {
   const [data, setData] = useState<any>({
@@ -14,21 +14,27 @@ const App = () => {
 
   const [direction, setDirection] = useState('rtl');
 
+
+  const stringToBoolean = (str: string) => {
+    if (['true', 'false'].includes(str?.toString())) {
+      return str.toString() === 'true';
+    }
+    return undefined;
+  };
+
   const onChange = ({ target }: any) => {
     const { name, value } = target;
-    console.log(name, value);
     setData({
       ...data,
       [name]: value
     });
   };
+
   const onClick = (e: any) => {
     console.log(e);
   };
 
   const [inputs, setInput] = useState<Array<InputProps>>([]);
-
-  //const inputs: Array<InputProps> = ;
 
   const inputsRef = useRef<Array<any>>([]);
 
@@ -70,7 +76,7 @@ const App = () => {
           name: 'confirm',
           type: 'checkbox',
           placeholder: 'confirm',
-          defaultChecked: true,
+          defaultChecked: false,
           onChange: onChange,
         },
         {
@@ -178,7 +184,7 @@ const App = () => {
               {...(input as any)}
               dir={direction}
               value={data[input.name]}
-              checked={data[input.name] ? data[input.name] === "1" : undefined}
+              checked={stringToBoolean(data[input.name])}
             />
           </div>
         );

@@ -2,7 +2,6 @@
 import {
   ChangeEvent,
   CSSProperties,
-  ReactNode,
   InputHTMLAttributes
 } from 'react';
 import { IntlConfig } from 'react-currency-input-field/dist/components/CurrencyInputProps';
@@ -32,7 +31,7 @@ export interface InputProps
     | 'currencyInput'
     | 'creatableSelect'
     | 'react-select';
-  icon?: ReactNode;
+  icon?: () => any;
   options?: Array<{
     value: string | number;
     label: string | number;
