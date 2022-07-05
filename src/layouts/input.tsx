@@ -80,9 +80,9 @@ const ReactInput: React.FC<InputProps> = forwardRef(
       ...(style || {})
     };
 
-    const stringToBoolean = (str: string) => {
+    const stringToBoolean = (str: any) => {
       if (['true', 'false'].includes(str.toString())) {
-        return str === 'true';
+        return str.toString() === 'true';
       }
       return !!str;
     };

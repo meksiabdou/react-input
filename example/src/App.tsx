@@ -14,6 +14,13 @@ const App = () => {
 
   const [direction, setDirection] = useState('rtl');
 
+  const stringToBoolean = (str: string) => {
+    if (['true', 'false'].includes(str?.toString())) {
+      return str.toString() === 'true';
+    }
+    return undefined;
+  };
+
   const onChange = ({ target }: any) => {
     const { name, value } = target;
     console.log(name, value);
@@ -178,7 +185,7 @@ const App = () => {
               {...(input as any)}
               dir={direction}
               value={data[input.name]}
-              checked={data[input.name] ? data[input.name] === "1" : undefined}
+              checked={stringToBoolean(data[input.name])}
             />
           </div>
         );
