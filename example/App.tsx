@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { useState } from 'react';
-import ReactInput, { InputProps } from '@meksiabdou/react-input';
+import * as React from 'react';
+import { useState, useEffect, useRef } from 'react';
+import ReactInput, { InputProps } from '../.';
 
 const App = () => {
   const [data, setData] = useState<any>({
@@ -23,27 +23,26 @@ const App = () => {
 
   const onChange = ({ target }: any) => {
     const { name, value } = target;
-    console.log(name, value);
-    setData({
-      ...data,
-      [name]: value
+    setData((preData: any) => {
+      return {
+        ...preData,
+        [name]: value,
+      };
     });
   };
+
   const onClick = (e: any) => {
     console.log(e);
   };
 
   const [inputs, setInput] = useState<Array<InputProps>>([]);
 
-  //const inputs: Array<InputProps> = ;
-
   const inputsRef = useRef<Array<any>>([]);
 
   useEffect(() => {
     console.log(data);
-    console.log(inputsRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputsRef?.current]);
+  }, [data]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -54,7 +53,7 @@ const App = () => {
           placeholder: 'Email',
           defaultValue: 'test@email.com',
           onChange: onChange,
-          onClick: onClick
+          onClick: onClick,
         },
         {
           name: 'amount',
@@ -64,43 +63,57 @@ const App = () => {
           as: 'currencyInput',
           decimalSeparator: '.',
           onChange: onChange,
-          onClick: onClick
+          onClick: onClick,
         },
         {
           name: 'password',
           type: 'password',
           placeholder: 'password',
           onChange: onChange,
-          onClick: onClick
+          onClick: onClick,
         },
         {
           name: 'confirm',
           type: 'checkbox',
-          placeholder: 'confirm',
+          label: 'confirm',
+          defaultChecked: false,
+          onChange: onChange,
+        },
+        {
+          name: 'active',
+          type: 'radio',
+          label: 'active',
           defaultChecked: true,
+          onChange: onChange,
+        },
+        {
+          name: 'active',
+          type: 'radio',
+          label: 'active',
+          //defaultChecked: false,
           onChange: onChange,
         },
         {
           name: 'role',
           as: 'select',
           placeholder: 'Select role',
-          defaultValue: "Admin",
+          defaultValue: 'Admin',
           //dir: 'rtl',
           options: [
             {
               value: '',
-              label: 'Select....'
+              label: 'Select....',
             },
             {
               value: 'Admin',
-              label: 'Admin'
+              label: 'Admin',
             },
             {
               value: 'Manger',
-              label: 'Manger'
-            }
+              label: 'Manger',
+            },
           ],
-          onChange: onChange
+          onChange: onChange,
         },
         {
           name: 'direction',
@@ -108,7 +121,7 @@ const App = () => {
           placeholder: 'Select direction',
           children: (
             <div>
-              {[{ value: 'rtl' }, { value: 'ltr' }].map((item) => (
+              {[{ value: 'rtl' }, { value: 'ltr' }].map(item => (
                 <p
                   style={{ cursor: 'pointer' }}
                   onClick={() => setDirection(item.value)}
@@ -118,7 +131,7 @@ const App = () => {
                 </p>
               ))}
             </div>
-          )
+          ),
         },
         {
           name: 'country',
@@ -127,18 +140,18 @@ const App = () => {
           options: [
             {
               value: '',
-              label: 'Select....'
+              label: 'Select....',
             },
             {
               value: 'algeria',
-              label: 'Algeria'
+              label: 'Algeria',
             },
             {
               value: 'Tunisia',
-              label: 'tunisia'
-            }
+              label: 'tunisia',
+            },
           ],
-          onChange: onChange
+          onChange: onChange,
         },
         {
           name: 'colors',
@@ -149,19 +162,19 @@ const App = () => {
           options: [
             {
               value: 'Read',
-              label: 'Read'
+              label: 'Read',
             },
             {
               value: 'Blue',
-              label: 'Blue'
+              label: 'Blue',
             },
             {
               value: 'Black',
-              label: 'Black'
-            }
+              label: 'Black',
+            },
           ],
-          onChange: onChange
-        }
+          onChange: onChange,
+        },
       ]);
     }, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -174,12 +187,12 @@ const App = () => {
         display: 'flex',
         alignContent: 'center',
         alignItems: 'center',
-        flexDirection: 'column'
+        flexDirection: 'column',
       }}
     >
       {inputs.map((input, index) => {
         return (
-          <div key={input.name} style={{ width: 300 }}>
+          <div key={index.toString()} style={{ width: 300 }}>
             <ReactInput
               ref={(ref: any) => (inputsRef.current[index] = ref)}
               {...(input as any)}
@@ -191,7 +204,7 @@ const App = () => {
         );
       })}
 
-      <div className='mb-1'>
+      <div className="mb-1">
         <p>Email : {data.email || ''}</p>
         <p>Amount : {data.amount || ''}</p>
         <p>Password : {data.password || ''}</p>
@@ -199,7 +212,7 @@ const App = () => {
         <p>Role : {data.role || ''}</p>
         <p>
           Colors :{' '}
-          {(data.colors as Array<any>)?.map((item) => item.value)?.join(', ')}
+          {(data.colors as Array<any>)?.map(item => item.value)?.join(', ')}
         </p>
       </div>
     </div>
