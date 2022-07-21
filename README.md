@@ -10,7 +10,7 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 ![license](https://badgen.net/github/license/meksiabdou/react-input)
 
-> React Input
+> html input for reactjs
 
 
 ## Install
