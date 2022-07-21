@@ -4,7 +4,7 @@ import React, {
   CSSProperties,
   ChangeEvent,
   forwardRef,
-  useEffect
+  useEffect,
 } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 import Select, { StylesConfig } from 'react-select';
@@ -16,7 +16,7 @@ import {
   styleInput,
   styleInputSelect,
   stylelabel,
-  styleViewIcon
+  styleViewIcon,
 } from '../styles';
 import Dropdown from './dropdown';
 import BsEyeFill from './eye';
@@ -76,15 +76,15 @@ const ReactInput: React.FC<InputProps> = forwardRef(
       control: (provided: any) => ({
         ...provided,
         ...styleInput,
-        width: '100%'
+        width: '100%',
       }),
       container: () => ({
-        width: '100%'
+        width: '100%',
       }),
       valueContainer: (provided: any) => {
         return { ...provided, padding: 0 };
       },
-      ...(style || {})
+      ...(style || {}),
     };
 
     const Component = useCallback((props: InputProps) => {
@@ -113,7 +113,7 @@ const ReactInput: React.FC<InputProps> = forwardRef(
         ...styleInputSelect,
         backgroundPosition: `${
           _rest.dir === 'rtl' ? 'left' : 'right'
-        } .75rem center`
+        } .75rem center`,
       };
 
       switch (as) {
@@ -129,11 +129,11 @@ const ReactInput: React.FC<InputProps> = forwardRef(
               ref={ref}
               {...(_rest as any)}
               onChange={_onChange}
-              className='form-select'
+              className="form-select"
               style={
                 {
                   ...selectStyle,
-                  direction: _rest.dir || 'initial'
+                  direction: _rest.dir || 'initial',
                 } as CSSProperties
               }
             >
@@ -158,10 +158,10 @@ const ReactInput: React.FC<InputProps> = forwardRef(
               ref={ref}
               {...(_rest as any)}
               style={selectStyle}
-              onChange={(e) => {
+              onChange={e => {
                 if (_onChange) {
                   _onChange({
-                    target: { value: e, name: _rest.name }
+                    target: { value: e, name: _rest.name },
                   } as any);
                 }
               }}
@@ -192,7 +192,7 @@ const ReactInput: React.FC<InputProps> = forwardRef(
                 if (_onChange) {
                   _onChange(
                     {
-                      target: { value: v, name: _rest.name }
+                      target: { value: v, name: _rest.name },
                     } as any,
                     values?.formatted,
                     values?.float
@@ -217,7 +217,7 @@ const ReactInput: React.FC<InputProps> = forwardRef(
               onChange={(e: any) => {
                 if (_onChange) {
                   _onChange({
-                    target: { value: e, name: _rest.name }
+                    target: { value: e, name: _rest.name },
                   } as any);
                 }
               }}
@@ -238,7 +238,7 @@ const ReactInput: React.FC<InputProps> = forwardRef(
               onChange={(e: any) => {
                 if (_onChange) {
                   _onChange({
-                    target: { value: e, name: _rest.name }
+                    target: { value: e, name: _rest.name },
                   } as any);
                 }
               }}
@@ -257,11 +257,11 @@ const ReactInput: React.FC<InputProps> = forwardRef(
           </label>
         ) : null}
         <div
-          className='input-group'
+          className="input-group"
           style={{
             ...styleGroup,
             ...(typeof style === 'object' ? style : {}),
-            borderColor: error ? '#dc3545' : '#ced4da'
+            borderColor: error ? '#dc3545' : '#ced4da',
           }}
         >
           <Component
@@ -271,16 +271,18 @@ const ReactInput: React.FC<InputProps> = forwardRef(
             type={passwordShow ? 'text' : type || undefined}
             value={value}
             checked={
-              type === 'checkbox' || type === 'radio' ? stringToBoolean(value) : undefined
+              type === 'checkbox' || type === 'radio'
+                ? stringToBoolean(value)
+                : undefined
             }
             label={label}
             onChange={(e: ChangeEvent<HTMLInputElement>, ...params) => {
               if (onChange && typeof onChange === 'function') {
                 if (type === 'checkbox' || type === 'radio') {
                   if ((e?.target as any)?.checked) {
-                    e.target.value = "true";
+                    e.target.value = 'true';
                   } else {
-                    e.target.value = "false";
+                    e.target.value = 'false';
                   }
                 }
                 setValue(e.target.value);
@@ -295,20 +297,20 @@ const ReactInput: React.FC<InputProps> = forwardRef(
             {...rest}
           />
           {icon && typeof icon === 'function' ? (
-            <span style={styleViewIcon} className='input-group-text'>
+            <span style={styleViewIcon} className="input-group-text">
               {icon()}
             </span>
           ) : null}
           {type === 'password' && (
             <span
               style={styleViewIcon}
-              className='input-group-text'
+              className="input-group-text"
               onClick={() => setPasswordShow(!passwordShow)}
             >
               {passwordShow ? (
-                <BsEyeSlashFill size={18} color='#464646' />
+                <BsEyeSlashFill size={18} color="#464646" />
               ) : (
-                <BsEyeFill size={18} color='#464646' />
+                <BsEyeFill size={18} color="#464646" />
               )}
             </span>
           )}
@@ -341,7 +343,7 @@ ReactInput.defaultProps = {
   prefix: undefined,
   suffix: undefined,
   isClearable: false,
-  isMulti: false
+  isMulti: false,
 };
 
 export default ReactInput;

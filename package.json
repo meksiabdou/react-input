@@ -1,6 +1,5 @@
 {
-  "version": "2.0.0",
-  "license": "MIT",
+  "version": "2.0.1",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -33,8 +32,26 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
+  "keywords": [
+    "reactjs",
+    "input",
+    "select",
+    "react-currency-input-field",
+    "react-select",
+    "dropdown"
+  ],
   "name": "@meksiabdou/react-input",
-  "author": "Meksi Abdennour",
+  "description": "html input for reactjs",
+  "repository": "https://github.com/meksiabdou/react-input",
+  "author": "Meksi Abdennour <meksiabdou@gmail.com> (https://github.com/meksiabdou)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meksiabdou/react-input/issues"
+  },
+  "homepage": "https://github.com/meksiabdou/react-input#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "module": "dist/react-input.esm.js",
   "size-limit": [
     {
@@ -48,11 +65,11 @@
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.8",
-    "@types/react": "^18.0.14",
-    "@types/react-dom": "^18.0.5",
+    "@types/react": "^17.0.47",
+    "@types/react-dom": "^17.0.17",
     "husky": "^8.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "size-limit": "^7.0.8",
     "tsdx": "^0.14.1",
     "tslib": "^2.4.0",

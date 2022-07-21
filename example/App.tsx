@@ -24,9 +24,13 @@ const App = () => {
 
   const onChange = ({ target }: any) => {
     const { name, value } = target;
-    setData({
-      ...data,
-      [name]: value
+    setData((preData : any) => {
+      return (
+        {
+          ...preData,
+          [name]: value
+        }
+      )
     });
   };
 
@@ -40,9 +44,8 @@ const App = () => {
 
   useEffect(() => {
     console.log(data);
-    console.log(inputsRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputsRef?.current]);
+  }, [data]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -75,8 +78,22 @@ const App = () => {
         {
           name: 'confirm',
           type: 'checkbox',
-          placeholder: 'confirm',
+          label: 'confirm',
           defaultChecked: false,
+          onChange: onChange,
+        },
+        {
+          name: 'active',
+          type: 'radio',
+          label: 'active',
+          defaultChecked: true,
+          onChange: onChange,
+        },
+        {
+          name: 'active',
+          type: 'radio',
+          label: 'active',
+          //defaultChecked: false,
           onChange: onChange,
         },
         {
@@ -178,7 +195,7 @@ const App = () => {
     >
       {inputs.map((input, index) => {
         return (
-          <div key={input.name} style={{ width: 300 }}>
+          <div key={index.toString()} style={{ width: 300 }}>
             <ReactInput
               ref={(ref: any) => (inputsRef.current[index] = ref)}
               {...(input as any)}

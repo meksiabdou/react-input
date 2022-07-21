@@ -4,13 +4,23 @@
 ![React](https://img.shields.io/badge/-React-05122A?style=flat&logo=react)&nbsp;
 ![NextJs](	https://img.shields.io/badge/next.js-000000?style=flat&logo=nextdotjs&logoColor=white)&nbsp;
 
+
+![bundlephobia](https://badgen.net/bundlephobia/minzip/@meksiabdou/react-input)
+![npm](https://badgen.net/npm/v/@meksiabdou/react-input)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+![license](https://badgen.net/github/license/meksiabdou/react-input)
+
 > React Input
 
 
 ## Install
 
-```bash
-yarn add https://github.com/meksiabdou/react-input.git#v2
+```cmd
+yarn add @meksiabdou/react-input
+```
+
+```cmd
+npm install @meksiabdou/react-input
 ```
 
 ### Parameters
@@ -67,14 +77,18 @@ const App = () => {
     colors: [{ value: 'Blue', label: 'Blue' }]
   });
 
-  const onChange = ({target}: any) => {
-    const {name, value} = target;
-    console.log(target);
-    setData({
-      ...data,
-      [name]: value
+    const onChange = ({ target }: any) => {
+    const { name, value } = target;
+    setData((preData : any) => {
+      return (
+        {
+          ...preData,
+          [name]: value
+        }
+      )
     });
   };
+
   const onClick = (e: any) => {
     console.log(e);
   }
