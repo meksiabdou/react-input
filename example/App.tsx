@@ -12,7 +12,7 @@ const App = () => {
     confirm: undefined,
   });
 
-  const [direction, setDirection] = useState('rtl');
+  const [direction, setDirection] = useState('ltr');
 
   const stringToBoolean = (str: string) => {
     if (['true', 'false'].includes(str?.toString())) {
@@ -50,8 +50,12 @@ const App = () => {
         {
           name: 'email',
           type: 'email',
+          label: <h4>Email</h4>,
           placeholder: 'Email',
           defaultValue: 'test@email.com',
+          inputGroupStyle: (style) => {
+            return {};
+          },
           onChange: onChange,
           onClick: onClick,
         },
@@ -59,7 +63,8 @@ const App = () => {
           name: 'amount',
           // type: 'text',
           placeholder: 'Amount',
-          defaultValue: 1000,
+          label: <h4>Amount</h4>,
+          defaultValue: 15000,
           as: 'currencyInput',
           decimalSeparator: '.',
           onChange: onChange,
@@ -69,33 +74,36 @@ const App = () => {
           name: 'password',
           type: 'password',
           placeholder: 'password',
+          label: <h4>Password</h4>,
           onChange: onChange,
           onClick: onClick,
         },
         {
           name: 'confirm',
           type: 'checkbox',
-          label: 'confirm',
+          label: <h4>Confirm</h4>,
           defaultChecked: false,
+          style: {
+            height: 30,
+            width: 30,
+          },
           onChange: onChange,
         },
         {
           name: 'active',
           type: 'radio',
-          label: 'active',
+          label: <h4>Active</h4>,
           defaultChecked: true,
-          onChange: onChange,
-        },
-        {
-          name: 'active',
-          type: 'radio',
-          label: 'active',
-          //defaultChecked: false,
+          style: {
+            height: 30,
+            width: 30,
+          },
           onChange: onChange,
         },
         {
           name: 'role',
           as: 'select',
+          label: <h4>Roles</h4>,
           placeholder: 'Select role',
           defaultValue: 'Admin',
           //dir: 'rtl',
@@ -118,6 +126,7 @@ const App = () => {
         {
           name: 'direction',
           as: 'dropdown',
+          label: <h4>Direction</h4>,
           placeholder: 'Select direction',
           children: (
             <div>
@@ -136,6 +145,7 @@ const App = () => {
         {
           name: 'country',
           as: 'dropdown',
+          label: <h4>Countries</h4>,
           placeholder: 'Select country',
           options: [
             {
@@ -156,6 +166,7 @@ const App = () => {
         {
           name: 'colors',
           as: 'react-select',
+          label: <h4>Colors</h4>,
           placeholder: 'Select color',
           defaultValue: [{ value: 'Blue', label: 'Blue' }],
           isMulti: true,

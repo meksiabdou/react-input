@@ -1,5 +1,5 @@
 {
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -76,7 +76,7 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "react-currency-input-field": "^3.6.4",
+    "react-currency-input-field": "^3.6.5",
     "react-select": "^5.4.0"
   }
 }

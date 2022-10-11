@@ -2,9 +2,11 @@
 import {
   ChangeEvent,
   CSSProperties,
-  InputHTMLAttributes
+  InputHTMLAttributes,
+  ReactNode
 } from 'react';
 import { IntlConfig } from 'react-currency-input-field/dist/components/CurrencyInputProps';
+import { StylesConfig } from 'react-select';
 
 export interface OptionProps {
   value: any;
@@ -15,7 +17,7 @@ export interface InputProps
   extends InputHTMLAttributes<'input' | 'textarea' | 'select'> {
   ref?: any;
   placeholder?: string;
-  label?: string;
+  label?: string | ReactNode;
   name: string;
   type?: string;
   value?: any;
@@ -31,12 +33,14 @@ export interface InputProps
     | 'currencyInput'
     | 'creatableSelect'
     | 'react-select';
-  icon?: () => any;
+  icon?: ReactNode;
   options?: Array<{
     value: string | number;
     label: string | number;
   }>;
   style?: CSSProperties;
+  inputGroupStyle?: (defaultStyle: CSSProperties) => CSSProperties;
+  reactSelectStyle?: StylesConfig;
   htmlFor?: string;
   decimalSeparator?: '.' | ',';
   // thousandSeparator?: '.' | ',';

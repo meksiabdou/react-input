@@ -5,6 +5,7 @@ import React, {
   ChangeEvent,
   forwardRef,
   useEffect,
+  isValidElement,
 } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 import Select, { StylesConfig } from 'react-select';
@@ -44,6 +45,8 @@ const ReactInput: React.FC<InputProps> = forwardRef(
       style,
       htmlFor,
       children,
+      inputGroupStyle,
+      reactSelectStyle,
       ...rest
     } = IProps;
 
@@ -84,7 +87,7 @@ const ReactInput: React.FC<InputProps> = forwardRef(
       valueContainer: (provided: any) => {
         return { ...provided, padding: 0 };
       },
-      ...(style || {}),
+      ...(reactSelectStyle || {}),
     };
 
     const Component = useCallback((props: InputProps) => {
@@ -93,6 +96,7 @@ const ReactInput: React.FC<InputProps> = forwardRef(
         suffix,
         prefix,
         precision,
+        label: _,
         //thousandSeparator,
         decimalSeparator,
         decimalScale,
@@ -250,18 +254,20 @@ const ReactInput: React.FC<InputProps> = forwardRef(
     }, []);
 
     return (
-      <div className={className || 'mb-1'}>
-        {label && as !== 'dropdown' ? (
+      <div className={className}>
+        {isValidElement(label) ? (
+          label
+        ) : (
           <label htmlFor={htmlFor || name} style={stylelabel}>
             {label}
           </label>
-        ) : null}
+        )}
         <div
-          className="input-group"
+          //className="input-group"
           style={{
-            ...styleGroup,
-            ...(typeof style === 'object' ? style : {}),
-            borderColor: error ? '#dc3545' : '#ced4da',
+            border: error ? '1px solid #dc3545' : '1px solid #ced4da',
+            ...(typeof inputGroupStyle === 'function' ? inputGroupStyle(styleGroup) : styleGroup)
+            //...(typeof style === 'object' ? style : styleGroup),
           }}
         >
           <Component
@@ -275,7 +281,7 @@ const ReactInput: React.FC<InputProps> = forwardRef(
                 ? stringToBoolean(value)
                 : undefined
             }
-            label={label}
+            //label={label}
             onChange={(e: ChangeEvent<HTMLInputElement>, ...params) => {
               if (onChange && typeof onChange === 'function') {
                 if (type === 'checkbox' || type === 'radio') {
@@ -292,13 +298,13 @@ const ReactInput: React.FC<InputProps> = forwardRef(
             }}
             onFocus={onFocus}
             style={
-              { ...styleInput, direction: dir || 'initial' } as CSSProperties
+              { ...styleInput, direction: dir || 'initial', ...style } as CSSProperties
             }
             {...rest}
           />
-          {icon && typeof icon === 'function' ? (
+          {isValidElement(icon) ? (
             <span style={styleViewIcon} className="input-group-text">
-              {icon()}
+              {icon}
             </span>
           ) : null}
           {type === 'password' && (

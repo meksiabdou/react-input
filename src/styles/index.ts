@@ -2,21 +2,13 @@ import { CSSProperties } from 'react';
 
 export const styleInput: CSSProperties = {
   padding: '.375rem .75rem',
-  fontSize: '1rem',
-  fontWeight: 400,
-  lineHeight: 1.5,
-  color: '#212529',
   border: 'none',
   borderRadius: '0',
   boxShadow: 'none',
   backgroundColor: 'transparent',
   outline: 'none',
   position: 'relative',
-  flex: '1 1 auto',
-  width: '1%',
-  minWidth: 0,
-  minHeight: 38,
-  justifyContent: 'space-between'
+  width: '100%',
 };
 
 export const styleInputSelect: CSSProperties = {
@@ -75,11 +67,12 @@ export const stylelabel: CSSProperties = {
 export const styleGroup: CSSProperties = {
   position: 'relative',
   display: 'flex',
-  flexWrap: 'wrap',
+  flexDirection: 'row',
+  //flexWrap: 'wrap',
   alignItems: 'stretch',
-  width: '100%',
-  border: '1px solid',
-  borderColor: '#ced4da',
+  //border: '1px solid',
+  //borderColor: '#ced4da',
+  minHeight: '38px',
   borderRadius: '.25rem',
   padding: '2px',
   backgroundColor: '#fff'
